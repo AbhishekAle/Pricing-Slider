@@ -1,0 +1,242 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.smart-revolution {
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 30px;
+  width: 70%;
+  border: 2px solid rgb(99, 12, 63);
+  border-radius: 10px;
+  
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 200;
+  color: #333;
+}
+
+.promo-banner {
+  background-color: #0e1d4e;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 20px;
+}
+
+.limited-time {
+  width: 13%;
+  color: white;
+  padding: 20px;
+  margin: 5px;
+}
+
+.free-period {
+  color: white;
+  width: 20%;
+  border: 1px dashed white;
+  border-radius: 15px;
+  padding: 20px 50px;
+  margin: 5px;
+}
+
+.commission {
+  background-color: #ffc107;
+  border-radius: 0 10px 10px 0px;
+  margin-right: -5px;
+  display: flex;  
+  align-items: center;
+  font-size: 3rem;
+  gap: 10px;
+  padding-left: 20px;
+}
+.commission span{
+  font-size: 1rem;
+  font-weight: 700;
+  width: 10%;
+}
+
+.start-button {
+  margin-top: 30px;
+  background-color: #0e1d4e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.pricing-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.pricing-card {
+  background-color: white;
+  flex: 1;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.header-1{
+  color: white;
+  border-radius: 20px 20px 0 0;
+  background-color: rgb(27, 27, 27);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ padding: 30px;
+ 
+}
+.pricing-card h3 {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h3 span{
+font-size: 0.9rem;
+font-weight: 200;
+}
+
+.pricing-card p {
+  color: #666;
+}
+
+.price {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.price span{
+  font-size: 1rem;
+  font-weight: 200;
+}
+.features {
+  list-style-type: none;
+  padding: 0 20px;
+  margin: 20px 0;
+  flex-grow: 1;
+}
+
+.features li {
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.features li::before {
+  content: '✓';
+  color: green;
+  position: absolute;
+  left: 0;
+}
+
+.features li.not-included::before {
+  content: '✗';
+  color: red;
+}
+
+.choose-plan {
+  background-color: rgb(27, 27, 27);
+  color: white;
+  border: none;
+  padding: 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.spotlight .header-1 {
+  background: rgb(85,1,1);
+background: linear-gradient(22deg, rgba(85,1,1,1) 48%, rgba(0,24,91,1) 95%);
+}
+
+.spotlight .choose-plan {
+  background: rgb(85,1,1);
+  background: linear-gradient(22deg, rgba(85,1,1,1) 48%, rgba(0,24,91,1) 95%);
+}
+
+@media (max-width: 1024px) {
+  .pricing-container {
+      flex-direction: column;
+  }
+
+  .pricing-card {
+      display: none;
+  }
+
+  .pricing-card.active {
+      display: flex;
+  }
+}
+@media (max-width: 768px) {
+  h1{
+    font-size: 1.5rem;
+  }
+  .promo-banner {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    padding-right: 10px;
+    margin: 0;
+  }
+
+  .limited-time, .free-period, .commission {
+    width: 90%; /* Full width on small screens */
+    margin: 10px 0; /* Add spacing between items */
+  }
+
+  .free-period {
+    padding: 15px 10px;
+    width: 70%; /* Adjust padding */
+  }
+
+  .commission {
+    font-size: 1.5rem; /* Smaller font size for small screens */
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .commission span{
+    width: 50%;
+  }
+
+  .start-button {
+    width: 88%; /* Full width button on small screens */
+    padding: 15px;
+    font-size: 1.2em; /* Slightly larger font */
+  }
+}
