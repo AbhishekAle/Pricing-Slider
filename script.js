@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const setupMobileView = () => {
     showCard(currentIndex);
-
     const swipeThreshold = 50; // Minimum distance in pixels to detect a swipe
 
     // Touch start event to capture the starting position
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       touchStartX = e.touches[0].clientX;
     });
 
-    // Touch move event to detect swipe direction
+    // Touch end event to detect swipe direction
     document.addEventListener("touchend", (e) => {
       const touchEndX = e.changedTouches[0].clientX;
       const touchDeltaX = touchEndX - touchStartX;
@@ -46,10 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Automatically change card every 4 seconds
-    autoSlideInterval = setInterval(nextCard, 4000);
+    autoSlideInterval = setInterval(nextCard, 5000);
   };
 
   const setupDesktopView = () => {
+    // Show all cards in desktop view
     cards.forEach((card) => card.classList.add("active"));
     if (autoSlideInterval) {
       clearInterval(autoSlideInterval);
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup choose plan button functionality
   const choosePlanButtons = document.querySelectorAll(".choose-plan");
   choosePlanButtons.forEach((button) => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () => {
       alert("Thank you for choosing this plan!");
       // Add more functionality here as needed
     });

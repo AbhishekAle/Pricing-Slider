@@ -27,7 +27,6 @@ main {
   width: 70%;
   border: 2px solid rgb(99, 12, 63);
   border-radius: 10px;
-  
 }
 
 h1 {
@@ -43,7 +42,6 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
   margin: 0 20px;
 }
 
@@ -55,6 +53,7 @@ h1 {
 }
 
 .free-period {
+  display: flex;
   color: white;
   width: 20%;
   border: 1px dashed white;
@@ -67,13 +66,14 @@ h1 {
   background-color: #ffc107;
   border-radius: 0 10px 10px 0px;
   margin-right: -5px;
-  display: flex;  
+  display: flex;
   align-items: center;
   font-size: 3rem;
   gap: 10px;
   padding-left: 20px;
 }
-.commission span{
+
+.commission span {
   font-size: 1rem;
   font-weight: 700;
   width: 10%;
@@ -99,6 +99,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  
 }
 
 .pricing-card {
@@ -107,26 +108,31 @@ h2 {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  transition: opacity 1s ease, transform 2s ease-in-out;
+  opacity: 1; 
+  transform: translateX(0); 
 }
-.header-1{
+
+.header-1 {
   color: white;
   border-radius: 20px 20px 0 0;
   background-color: rgb(27, 27, 27);
- display: flex;
- flex-direction: column;
- align-items: center;
- padding: 30px;
- 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
 }
+
 .pricing-card h3 {
   margin-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-h3 span{
-font-size: 0.9rem;
-font-weight: 200;
+
+h3 span {
+  font-size: 0.9rem;
+  font-weight: 200;
 }
 
 .pricing-card p {
@@ -139,10 +145,11 @@ font-weight: 200;
   margin: 10px 0;
 }
 
-.price span{
+.price span {
   font-size: 1rem;
   font-weight: 200;
 }
+
 .features {
   list-style-type: none;
   padding: 0 20px;
@@ -180,63 +187,72 @@ font-weight: 200;
 }
 
 .spotlight .header-1 {
-  background: rgb(85,1,1);
-background: linear-gradient(22deg, rgba(85,1,1,1) 48%, rgba(0,24,91,1) 95%);
+  background: rgb(83,3,3);
+  background: linear-gradient(45deg, rgba(83,3,3,0.8995973389355743) 42%, rgba(0,24,91,0.8071603641456583) 91%);
 }
 
 .spotlight .choose-plan {
-  background: rgb(85,1,1);
-  background: linear-gradient(22deg, rgba(85,1,1,1) 48%, rgba(0,24,91,1) 95%);
+  background: rgb(83,3,3);
+  background: linear-gradient(45deg, rgba(83,3,3,0.8995973389355743) 42%, rgba(0,24,91,0.8071603641456583) 91%);
 }
 
 @media (max-width: 1024px) {
   .pricing-container {
-      flex-direction: column;
+    flex-direction: column;
+    
   }
 
   .pricing-card {
-      display: none;
+    display: flex;
+    opacity: 0;
+    transform: translateX(0);
+    position: absolute;
   }
 
   .pricing-card.active {
-      display: flex;
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
   }
 }
+
 @media (max-width: 768px) {
-  h1{
+  h1 {
     font-size: 1.5rem;
   }
+
   .promo-banner {
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
     align-items: center;
     padding-right: 10px;
     margin: 0;
   }
 
   .limited-time, .free-period, .commission {
-    width: 90%; /* Full width on small screens */
-    margin: 10px 0; /* Add spacing between items */
+    width: 90%;
+    margin: 10px 0;
   }
 
   .free-period {
     padding: 15px 10px;
-    width: 70%; /* Adjust padding */
+    width: 70%;
   }
 
   .commission {
-    font-size: 1.5rem; /* Smaller font size for small screens */
+    font-size: 1.5rem;
     padding: 10px 0;
     display: flex;
     justify-content: center;
     border-radius: 10px;
   }
-  .commission span{
+
+  .commission span {
     width: 50%;
   }
 
   .start-button {
-    width: 88%; /* Full width button on small screens */
+    width: 88%;
     padding: 15px;
-    font-size: 1.2em; /* Slightly larger font */
+    font-size: 1.2em;
   }
 }
