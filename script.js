@@ -1,81 +1,94 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const cardWrapper = document.querySelector(".card-wrapper");
   const cards = document.querySelectorAll(".pricing-card");
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
   let currentIndex = 0;
+  const cardsToShow = 3;
   const totalCards = cards.length;
-  let touchStartX = 0;
-  let autoSlideInterval;
 
-  const showCard = (index) => {
-    cards.forEach((card, i) => {
-      card.classList.toggle("active", i === index);
-    });
-  };
+  function updateCardPosition() {
+    const cardWidth = cards[0].offsetWidth;
+    const margin = parseInt(window.getComputedStyle(cards[0]).marginLeft) * 2;
+    const offset = currentIndex * (cardWidth + margin);
+    cardWrapper.style.transform = `translateX(-${offset}px)`;
+  }
 
-  const nextCard = () => {
-    currentIndex = (currentIndex + 1) % totalCards;
-    showCard(currentIndex);
-  };
-
-  const prevCard = () => {
-    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-    showCard(currentIndex);
-  };
-
-  const setupMobileView = () => {
-    showCard(currentIndex);
-    const swipeThreshold = 50; // Minimum distance in pixels to detect a swipe
-
-    // Touch start event to capture the starting position
-    document.addEventListener("touchstart", (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-
-    // Touch end event to detect swipe direction
-    document.addEventListener("touchend", (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const touchDeltaX = touchEndX - touchStartX;
-
-      if (Math.abs(touchDeltaX) > swipeThreshold) {
-        if (touchDeltaX > 0) {
-          prevCard();
-        } else {
-          nextCard();
-        }
-      }
-    });
-
-    // Automatically change card every 4 seconds
-    autoSlideInterval = setInterval(nextCard, 5000);
-  };
-
-  const setupDesktopView = () => {
-    // Show all cards in desktop view
-    cards.forEach((card) => card.classList.add("active"));
-    if (autoSlideInterval) {
-      clearInterval(autoSlideInterval);
+  function cloneCards() {
+    for (let i = 0; i < cardsToShow; i++) {
+      cardWrapper.appendChild(cards[i].cloneNode(true));
     }
-  };
+  }
 
-  const handleResize = () => {
-    if (window.innerWidth <= 1024) {
-      setupMobileView();
+  function nextCard() {
+    if (currentIndex >= totalCards) {
+      cardWrapper.style.transition = "none";
+      currentIndex = 0;
+      updateCardPosition();
+      setTimeout(() => {
+        cardWrapper.style.transition = "transform 0.5s ease";
+        currentIndex++;
+        updateCardPosition();
+      }, 50);
     } else {
-      setupDesktopView();
+      currentIndex++;
+      updateCardPosition();
     }
-  };
+  }
+
+  function prevCard() {
+    if (currentIndex <= 0) {
+      cardWrapper.style.transition = "none";
+      currentIndex = totalCards;
+      updateCardPosition();
+      setTimeout(() => {
+        cardWrapper.style.transition = "transform 0.5s ease";
+        currentIndex--;
+        updateCardPosition();
+      }, 50);
+    } else {
+      currentIndex--;
+      updateCardPosition();
+    }
+  }
+
+  leftArrow.addEventListener("click", prevCard);
+  rightArrow.addEventListener("click", nextCard);
+
+  // Touch events for swiping on mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  cardWrapper.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  cardWrapper.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    if (touchStartX - touchEndX > 50) {
+      nextCard();
+    }
+    if (touchEndX - touchStartX > 50) {
+      prevCard();
+    }
+  }
 
   // Initial setup
-  handleResize();
+  cloneCards();
+  updateCardPosition();
 
-  // Listen for window resize events
-  window.addEventListener("resize", handleResize);
+  // Responsive behavior
+  window.addEventListener("resize", updateCardPosition);
 
   // Setup choose plan button functionality
   const choosePlanButtons = document.querySelectorAll(".choose-plan");
   choosePlanButtons.forEach((button) => {
     button.addEventListener("click", () => {
       alert("Thank you for choosing this plan!");
-      // Add more functionality here as needed
     });
   });
 });
