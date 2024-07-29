@@ -204,11 +204,12 @@ h3 span {
 
 .spotlight .header-1 {
   background: rgb(153,24,62);
-background: linear-gradient(34deg, rgba(153,24,62,0.8799894957983193) 40%, rgba(66,33,90,0.927608543417367) 77%);
+  background: linear-gradient(34deg, rgba(153,24,62,0.9051995798319328) 14%, rgba(66,33,90,0.9948354341736695) 97%);
 }
 .spotlight .choose-plan {
   background: rgb(153,24,62);
-  background: linear-gradient(34deg, rgba(153,24,62,0.8799894957983193) 40%, rgba(66,33,90,0.927608543417367) 77%);}
+  background: linear-gradient(34deg, rgba(153,24,62,0.9051995798319328) 14%, rgba(66,33,90,0.9948354341736695) 97%);
+}
 
 /* Navigation Arrows */
 .arrow {
