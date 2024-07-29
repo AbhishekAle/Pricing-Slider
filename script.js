@@ -81,6 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
   cloneCards();
   updateCardPosition();
 
+  // Auto-slide functionality
+  const autoSlideInterval = setInterval(nextCard, 3000); // Slide every 3 seconds
+
+  // Stop auto-slide on manual interaction
+  [leftArrow, rightArrow].forEach((arrow) => {
+    arrow.addEventListener("click", () => {
+      clearInterval(autoSlideInterval);
+    });
+  });
+
+  // Stop auto-slide on touch interaction
+  cardWrapper.addEventListener("touchstart", () => {
+    clearInterval(autoSlideInterval);
+  });
+
   // Responsive behavior
   window.addEventListener("resize", updateCardPosition);
 
