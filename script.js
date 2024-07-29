@@ -1,23 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cardWrapper = document.querySelector(".card-wrapper");
-  const cards = document.querySelectorAll(".pricing-card");
+  const cards = Array.from(document.querySelectorAll(".pricing-card"));
   const leftArrow = document.querySelector(".left-arrow");
   const rightArrow = document.querySelector(".right-arrow");
   let currentIndex = 0;
   const cardsToShow = 3;
   const totalCards = cards.length;
+  let autoSlideInterval;
+
+  // Function to handle card click
+  function handleCardClick(card) {
+    document
+      .querySelectorAll(".pricing-card .header-1, .pricing-card .choose-plan")
+      .forEach((el) => {
+        el.classList.remove("active");
+      });
+
+    card.querySelector(".header-1").classList.add("active");
+    card.querySelector(".choose-plan").classList.add("active");
+
+    // Stop auto-slide on card click
+    clearInterval(autoSlideInterval);
+  }
+
+  // Add click event listeners to all cards
+  function addCardClickListeners() {
+    document.querySelectorAll(".pricing-card").forEach((card) => {
+      card.addEventListener("click", () => handleCardClick(card));
+    });
+  }
+
+  // Clone cards for the infinite scroll effect
+  function cloneCards() {
+    for (let i = 0; i < cardsToShow; i++) {
+      const clone = cards[i].cloneNode(true);
+      cardWrapper.appendChild(clone);
+    }
+  }
 
   function updateCardPosition() {
     const cardWidth = cards[0].offsetWidth;
     const margin = parseInt(window.getComputedStyle(cards[0]).marginLeft) * 2;
     const offset = currentIndex * (cardWidth + margin);
     cardWrapper.style.transform = `translateX(-${offset}px)`;
-  }
-
-  function cloneCards() {
-    for (let i = 0; i < cardsToShow; i++) {
-      cardWrapper.appendChild(cards[i].cloneNode(true));
-    }
   }
 
   function nextCard() {
@@ -77,12 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Initial setup
-  cloneCards();
-  updateCardPosition();
+  // Initialize the slider
+  function initializeSlider() {
+    cloneCards();
+    updateCardPosition();
+    addCardClickListeners(); // Ensure click listeners are added to all cards, including clones
 
-  // Auto-slide functionality
-  const autoSlideInterval = setInterval(nextCard, 3000); // Slide every 3 seconds
+    // Start auto-slide
+    autoSlideInterval = setInterval(nextCard, 3000); // Slide every 3 seconds
+  }
 
   // Stop auto-slide on manual interaction
   [leftArrow, rightArrow].forEach((arrow) => {
@@ -99,11 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Responsive behavior
   window.addEventListener("resize", updateCardPosition);
 
-  // Setup choose plan button functionality
-  const choosePlanButtons = document.querySelectorAll(".choose-plan");
-  choosePlanButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      alert("Thank you for choosing this plan!");
-    });
-  });
+  // Initialize slider functionality
+  initializeSlider();
 });
