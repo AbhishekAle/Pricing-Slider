@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIndex = 0;
       updateCardPosition();
       setTimeout(() => {
-        cardWrapper.style.transition = "transform 0.5s ease";
+        cardWrapper.style.transition = "transform 1.5s ease";
         currentIndex++;
         updateCardPosition();
       }, 50);
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIndex = totalCards;
       updateCardPosition();
       setTimeout(() => {
-        cardWrapper.style.transition = "transform 0.5s ease";
+        cardWrapper.style.transition = "transform 1.5s ease";
         currentIndex--;
         updateCardPosition();
       }, 50);
