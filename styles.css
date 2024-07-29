@@ -105,6 +105,7 @@ h2 {
   max-width: 1190px;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
 }
 
 .card-wrapper {
@@ -137,6 +138,7 @@ h2 {
   padding: 30px;
   text-align: center;
 }
+
 
 .pricing-card h3 {
   margin: 0;
@@ -236,7 +238,7 @@ h3 span {
 /* Navigation Arrows */
 .arrow {
   position: absolute;
-  top: 80%;
+  top: 50%;
   transform: translateY(-50%);
   color: black;
   border: none;
@@ -259,11 +261,11 @@ h3 span {
 }
 
 .left-arrow {
-  left: 20rem; 
+  left: 0; 
 }
 
 .right-arrow {
-  right: 20rem; 
+  right: 0; 
 }
 
 @media (max-width: 1024px) {
@@ -312,18 +314,5 @@ h3 span {
   }
   .features li{
     font-size:0.86em;
-  }
-  .arrow{
-    position: absolute;
-    top: 150%;
-    width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  }
-  .left-arrow{
-    left: 0px;
-  }
-  .right-arrow{
-    right: 0px;
   }
 }
