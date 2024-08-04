@@ -270,7 +270,7 @@ h3 span {
 
 .dots-container {
   text-align: center;
-  margin-bottom: 3  0px;
+  margin-bottom: 30px;
 }
 
 .dot {
@@ -281,9 +281,7 @@ h3 span {
   background-color: #bbb;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
+  transition: background-color 0.3s;3
 .dot.active {
   background-color: #717171;
 }
