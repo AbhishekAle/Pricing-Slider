@@ -282,6 +282,7 @@ h3 span {
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s;
+}
 .dot.active {
   background-color: #717171;
 }
@@ -333,5 +334,4 @@ h3 span {
   .features li{
     font-size:0.86em;
   }
-}
 }
