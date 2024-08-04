@@ -268,6 +268,26 @@ h3 span {
   right: 0; 
 }
 
+.dots-container {
+  text-align: center;
+  margin-bottom: 3  0px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #717171;
+}
+
 @media (max-width: 1024px) {
   .pricing-card {
       flex: 0 0 calc(50% - 20px);

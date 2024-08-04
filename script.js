@@ -1,12 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cardWrapper = document.querySelector(".card-wrapper");
   const cards = Array.from(document.querySelectorAll(".pricing-card"));
+  const dotsContainer = document.querySelector(".dots-container");
   const leftArrow = document.querySelector(".left-arrow");
   const rightArrow = document.querySelector(".right-arrow");
   let currentIndex = 0;
   const cardsToShow = 3;
   const totalCards = cards.length;
   let autoSlideInterval;
+
+  // Create dots
+  cards.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    dot.addEventListener("click", () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  // Update dots
+  function updateDots() {
+    const dots = document.querySelectorAll(".dot");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentIndex % totalCards);
+    });
+  }
+
+  // Show specific slide
+  function showSlide(index) {
+    currentIndex = index;
+    updateCardPosition();
+    updateDots();
+  }
 
   // Function to handle card click
   function handleCardClick(card) {
@@ -54,10 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
         cardWrapper.style.transition = "transform 1.5s ease";
         currentIndex++;
         updateCardPosition();
+        updateDots();
       }, 50);
     } else {
       currentIndex++;
       updateCardPosition();
+      updateDots();
     }
   }
 
@@ -70,10 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
         cardWrapper.style.transition = "transform 1.5s ease";
         currentIndex--;
         updateCardPosition();
+        updateDots();
       }, 50);
     } else {
       currentIndex--;
       updateCardPosition();
+      updateDots();
     }
   }
 
@@ -106,7 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeSlider() {
     cloneCards();
     updateCardPosition();
-    addCardClickListeners(); // Ensure click listeners are added to all cards, including clones
+    addCardClickListeners(); //click listeners are added to all cards, including clones
+    updateDots();
 
     // Start auto-slide
     autoSlideInterval = setInterval(nextCard, 3000); // Slide every 3 seconds
