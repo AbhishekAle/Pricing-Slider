@@ -1,23 +1,65 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cardWrapper = document.querySelector(".card-wrapper");
-  const cards = Array.from(document.querySelectorAll(".pricing-card"));
+  const originalCards = Array.from(document.querySelectorAll(".pricing-card"));
   const dotsContainer = document.querySelector(".dots-container");
   const leftArrow = document.querySelector(".left-arrow");
   const rightArrow = document.querySelector(".right-arrow");
-  let currentIndex = 0;
   const cardsToShow = 3;
-  const totalCards = cards.length;
+  let currentIndex = 0;
+  const totalCards = originalCards.length;
   let autoSlideInterval;
 
-  // Create dots
-  cards.forEach((_, i) => {
-    const dot = document.createElement("span");
-    dot.classList.add("dot");
-    dot.addEventListener("click", () => showSlide(i));
-    dotsContainer.appendChild(dot);
-  });
+  // Function to handle Read More / Read Less button clicks
+  function handleReadMoreClick() {
+    const currentCard = this.closest(".pricing-card");
+    const featuresList = currentCard.querySelector(".features");
+    const additionalOptions = featuresList.querySelectorAll(
+      ".additional-options"
+    );
+    const isExpanded = currentCard.classList.contains("expanded");
 
-  // Update dots
+    // Collapse all cards first
+    document.querySelectorAll(".pricing-card").forEach((card) => {
+      card.classList.remove("expanded");
+      card.querySelectorAll(".additional-options").forEach((option) => {
+        option.classList.add("hidden");
+      });
+      const readMoreBtn = card.querySelector(".read-more");
+      if (readMoreBtn) readMoreBtn.textContent = "Read More";
+    });
+
+    // Expand current card if it wasn't expanded before
+    if (!isExpanded) {
+      currentCard.classList.add("expanded");
+      additionalOptions.forEach((option) => option.classList.remove("hidden"));
+      this.textContent = "Read Less";
+    }
+
+    // Update card positions
+    updateCardPosition();
+  }
+
+  // Attach event listeners to Read More buttons
+  function attachReadMoreListeners() {
+    const readMoreButtons = document.querySelectorAll(".read-more");
+    readMoreButtons.forEach((button) => {
+      button.removeEventListener("click", handleReadMoreClick); // Remove existing listener to avoid duplication
+      button.addEventListener("click", handleReadMoreClick);
+    });
+  }
+
+  // Create dots for pagination
+  function createDots() {
+    dotsContainer.innerHTML = ""; // Clear existing dots
+    originalCards.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.classList.add("dot");
+      dot.addEventListener("click", () => showSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  // Update dots based on the current slide
   function updateDots() {
     const dots = document.querySelectorAll(".dot");
     dots.forEach((dot, i) => {
@@ -25,46 +67,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Show specific slide
+  // Show a specific slide
   function showSlide(index) {
     currentIndex = index;
     updateCardPosition();
     updateDots();
   }
 
-  // Function to handle card click
+  // Handle card click
   function handleCardClick(card) {
     document
       .querySelectorAll(".pricing-card .header-1, .pricing-card .choose-plan")
-      .forEach((el) => {
-        el.classList.remove("active");
-      });
+      .forEach((el) => el.classList.remove("active"));
 
     card.querySelector(".header-1").classList.add("active");
     card.querySelector(".choose-plan").classList.add("active");
 
-    // Stop auto-slide on card click
     clearInterval(autoSlideInterval);
   }
 
   // Add click event listeners to all cards
   function addCardClickListeners() {
     document.querySelectorAll(".pricing-card").forEach((card) => {
+      card.removeEventListener("click", () => handleCardClick(card)); // Remove existing listener to avoid duplication
       card.addEventListener("click", () => handleCardClick(card));
     });
   }
 
-  // Clone cards for the infinite scroll effect
+  // Clone cards for infinite scroll effect
   function cloneCards() {
     for (let i = 0; i < cardsToShow; i++) {
-      const clone = cards[i].cloneNode(true);
+      const clone = originalCards[i].cloneNode(true);
       cardWrapper.appendChild(clone);
     }
   }
 
   function updateCardPosition() {
-    const cardWidth = cards[0].offsetWidth;
-    const margin = parseInt(window.getComputedStyle(cards[0]).marginLeft) * 2;
+    const cardWidth = originalCards[0].offsetWidth;
+    const margin =
+      parseInt(window.getComputedStyle(originalCards[0]).marginLeft) * 2;
     const offset = currentIndex * (cardWidth + margin);
     cardWrapper.style.transform = `translateX(-${offset}px)`;
   }
@@ -79,11 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
         currentIndex++;
         updateCardPosition();
         updateDots();
+        attachReadMoreListeners();
+        addCardClickListeners();
       }, 50);
     } else {
       currentIndex++;
       updateCardPosition();
       updateDots();
+      attachReadMoreListeners();
     }
   }
 
@@ -97,18 +141,22 @@ document.addEventListener("DOMContentLoaded", () => {
         currentIndex--;
         updateCardPosition();
         updateDots();
+        attachReadMoreListeners();
+        addCardClickListeners();
       }, 50);
     } else {
       currentIndex--;
       updateCardPosition();
       updateDots();
+      attachReadMoreListeners();
     }
   }
 
+  // Add event listeners to navigation arrows
   leftArrow.addEventListener("click", prevCard);
   rightArrow.addEventListener("click", nextCard);
 
-  // Touch events for swiping on mobile
+  // Handle touch events for mobile swipe
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -134,8 +182,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeSlider() {
     cloneCards();
     updateCardPosition();
-    addCardClickListeners(); //click listeners are added to all cards, including clones
+    addCardClickListeners();
+    createDots();
     updateDots();
+    attachReadMoreListeners();
 
     // Start auto-slide
     autoSlideInterval = setInterval(nextCard, 3000); // Slide every 3 seconds
@@ -148,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Stop auto-slide on touch interaction
   cardWrapper.addEventListener("touchstart", () => {
     clearInterval(autoSlideInterval);
   });
